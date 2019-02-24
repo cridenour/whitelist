@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile |  Minecraft Whitelist Redux{% endblock %}
+
+{% block card_body %}
+    <form class="form" method="post">
+        <div class="form-group">
+            <label>Twitch Username</label>
+            <input class="form-control-plaintext" readonly value="{{ user.username }}" />
+        </div>
+
+        <div class="form-group">
+            <label for="mojang-username">Minecraft Username</label>
+            {% if profile.uuid %}
+            <input class="form-control-plaintext" readonly value="{{ profile.current_username }}" />
+            <small>Your Mojang UUID is {{ profile.uuid }}.</small>
+            {% else %}
+            <input class="form-control" id="mojang-username" name="current_username" aria-describedby="mojangHelp"
+                   placeholder="Enter current Minecraft username.">
+            {{ form.current_username.errors }}
+            <small id="mojangHelp" class="form-text text-muted">This will stay up to date if you change it.</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label>Active Whitelists</label>
+            <ul>
+                {% for act in active %}
+                <li>{{ act.user.username }}</li>
+                {% empty %}
+                <li>You are not a member of any whitelists.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% if expired %}
+        <div class="form-group">
+            <label>Expired Whitelists</label>
+            <ul>
+                {% for exp in expired %}
+                <li>friartruck13 <a class="btn btn-sm btn-twitch ml-1" href="https://www.twitch.tv/products/{{ exp.user.username }}/ticket/new"><i class="fa fa-redo-alt"></i> Resub</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block body_class %}bg-dark{% endblock %}
+
+{% block main %}
+<main role="main" class="container explainer mt-2">
+    <div class="row">
+        <div class="col">
+            <h1>Minecraft Whitelist Redux</h1>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <h3>What is it?</h3>
+            <p>This is a tool for Twitch broadcasters to maintain a Minecraft whitelist (JSON or TXT) based on active subscribers.</p>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <h3>Doesn't this exist?</h3>
+            <p>It used to but it disappeared and packs like Sky Factory 3, SevTech: Ages and sub servers everywhere had to scramble (or found no solution).</p>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <h3>What if you disappear?</h3>
+            <p>I hope I won't but if I do, it will be OK.</p>
+            <ul>
+                <li>We're <a href="https://github.com/cridenour/whitelist">open source.</a></li>
+                <li>We have <a href="{% url 'cname' %}">instructions</a> on how to set up a CNAME record if you need to transition from our servers to yours.</li>
+                <li>(WIP) I'm working on adding a backup/restore system so if you transition, you can keep all existing members on the list.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <h3>Cool story, what does it do exactly?</h3>
+            <p>Once a broadcaster signs up and adds a whitelist, they can:</p>
+            <ul>
+                <li>Send a link to their subscribers to connect their Twitch account</li>
+                <li>Users can add a username, which is converted into a Mojang UUID</li>
+                <li>Checks daily for username updates and subscription status (three day grace period)</li>
+                <li>Gives public or private links to access the whitelist in JSON (new) or TXT (old) style</li>
+                <li>Allows broadcaster to add VIP members who are on the whitelist regardless of sub status</li>
+                <li>Allows broadcaster to add ban Mojang accounts regardless of sub status</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <h3>This is neat, how can we thank you?</h3>
+            <p>Gift me a sub to your favorite broadcaster!</p>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <p class="align-center text-muted">&copy; 2019 Chris Ridenour</p>
+        </div>
+    </div>
+</main>
+{% endblock %}

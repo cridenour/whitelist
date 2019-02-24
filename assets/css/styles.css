@@ -1,0 +1,60 @@
+/* Offcanvas Bootstrap Example */
+html,
+body {
+  overflow-x: hidden; /* Prevent scroll on narrow devices */
+}
+
+@media (max-width: 767.98px) {
+  .offcanvas-collapse {
+    position: fixed;
+    top: 56px; /* Height of navbar */
+    bottom: 0;
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    overflow-y: auto;
+    background-color: var(--gray-dark);
+    transition: -webkit-transform .3s ease-in-out;
+    transition: transform .3s ease-in-out;
+    transition: transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  .offcanvas-collapse.open {
+    -webkit-transform: translateX(-1rem);
+    transform: translateX(-1rem); /* Account for horizontal padding on navbar */
+  }
+}
+
+/* Main styles */
+main {
+    padding-top: 60px;
+    min-height: 100vh;
+}
+
+.card-body {
+
+}
+
+/* Explainer styles */
+.explainer {
+  color: #FFFFFF;
+}
+
+/* Connect styles */
+.existing {
+    font-weight: bold;
+}
+
+/* Twitch button */
+.btn-twitch {
+  color: #FFFFFF;
+  background-color: #6441A5;
+  border-color: #2F1F4E;
+}
+
+.btn-twitch:hover, .btn-twitch:focus, .btn-twitch:active, .btn-twitch.active {
+  color: #FFFFFF;
+  background-color: #472e75;
+  border-color: #2F1F4E;
+}

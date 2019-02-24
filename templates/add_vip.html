@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Add VIP |  Minecraft Whitelist Redux{% endblock %}
+
+{% block card_body %}
+    <p>Add minecraft names that stay <b>on</b> the whitelist regardless of their subscription status.</p>
+    <form class="form" method="post">
+        <div class="form-group">
+            <label for="mojang-username">Minecraft Username</label>
+            <input class="form-control" id="mojang-username" name="current_username" aria-describedby="mojangHelp"
+                   placeholder="Enter their Minecraft username.">
+            {{ form.current_username.errors }}
+            <small id="mojangHelp" class="form-text text-muted">This will stay up to date if they change it.</small>
+        </div>
+
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+{% endblock %}

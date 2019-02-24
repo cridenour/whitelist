@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Join {{ broadcaster }}'s whitelist | Minecraft Whitelist Redux{% endblock %}
+
+{% block card_body %}
+    {% if unknown_broadcaster %}
+    <p>We don't know a broadcaster by that name. Send them here to sign up!</p>
+    {% elif no_whitelist %}
+    <p>This broadcaster has not enabled a whitelist.</p>
+    {% else %}
+    <h2>Let's begin!</h2>
+    <p>Join <span class="existing">{{ existing }}</span> others on {{ broadcaster }}'s whitelist. You must be a current subscriber to join.</p>
+    <p>First step is to connect your twitch account.</p>
+
+    <a class="btn btn-twitch btn-lg" href="{% url "social:begin" "twitch" %}?next={% url 'broadcaster-join' broadcaster %}"><i class="fab fa-twitch"></i> Login With Twitch</a>
+    {% endif %}
+{% endblock %}

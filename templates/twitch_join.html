@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Join {{ broadcaster }}'s whitelist | Minecraft Whitelist Redux{% endblock %}
+
+{% block card_body %}
+    {% if unknown_broadcaster %}
+    <p>We don't know a broadcaster by that name. Send them here to sign up!</p>
+    {% elif no_whitelist %}
+    <p>This broadcaster has not enabled a whitelist.</p>
+    {% else %}
+    <h2>Join Whitelist</h2>
+    <p>Join <span class="existing">{{ existing }}</span> others on {{ broadcaster }}'s whitelist.</p>
+
+    {% if subscriber %}
+        {% if joined %}
+        <p>You are already part of this whitelist.</p>
+        {% else %}
+            <form method="post">
+            {% if needs_mojang %}
+                <input class="form-control" id="mojang-username" required name="current_username" aria-describedby="mojangHelp"
+                   placeholder="Enter current Minecraft username.">
+                {{ form.current_username.errors }}
+                <small id="mojangHelp" class="form-text text-muted mb-3">This will stay up to date if you change it.</small>
+            {% endif %}
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <button class="btn btn-primary btn-large" type="submit">Join Whitelist</button>
+            </form>
+        {% endif %}
+    {% else %}
+    <p>You are not a current subscriber to Darkosto's channel.</p>
+    <a class="btn btn-sm btn-twitch mb-2" href="https://www.twitch.tv/products/{{ broadcaster }}/ticket/new"><i class="fa fa-redo-alt"></i> Resub</a>
+
+    <p class="text-muted">Did we get it wrong? Click below to refresh.</p>
+    <a class="btn btn-twitch btn-sm" href="{% url 'broadcaster-join' broadcaster %}">Refresh</a>
+    {% endif %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,78 @@
+{%  extends 'base.html' %}
+
+{% block title %}Whitelist Settings |  Minecraft Whitelist Redux{% endblock %}
+
+{% block card_body %}
+    {% if no_whitelist %}
+    <p>You do not have a current whitelist. Want to make one?</p>
+    <a href="{% url 'whitelist-add' %}" class="btn btn-lg btn-primary"><i class="fa fa-plus"></i> Start Whitelist</a>
+    {% else %}
+    <form class="form mb-3" method="post">
+        <div class="form-group">
+            <label>Public Access</label>
+            <p class="text-muted">Using this in a modpack and don't need authentcation to access?</p>
+
+            <div class="form-check">
+              {{ form.public }}
+              <label class="form-check-label" for="{{ form.public.id_for_label }}">
+                Public List
+              </label>
+            </div>
+        </div>
+
+        {% csrf_token %}
+        <button class="btn btn-info btn-sm">Save</button>
+    </form>
+
+    <div class="form-group">
+        <label>URLs</label>
+        <input class="form-control" readonly value="{{ json_url }}" />
+        <input class="form-control" readonly value="{{ txt_url }}" />
+    </div>
+
+    <div>
+        <div class="form-group">
+            <label>VIPs</label>
+            <ul>
+                {% for v in vips %}
+                <li>{{ v.current_username }} <a title="Remove VIP" href="{% url 'remove-vip' v.id %}"><i class="fa fa-close"></i></a></li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'add-vip' %}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add VIP</a>
+        </div>
+
+        <div class="form-group">
+            <label>Bans</label>
+            <p class="text-muted">Have a troll? Ban their minecraft account ahead of time.</p>
+            <ul>
+                {% for b in bans %}
+                <li>{{ b.current_username }} <a title="Remove Ban" href="{% url 'remove-ban' b.id %}"><i class="fa fa-close"></i></a></li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'add-ban' %}" class="btn btn-danger btn-sm"><i class="fa fa-plus"></i> Add Ban</a>
+        </div>
+
+        <div class="form-group">
+            <label>Active Members</label>
+            <ul>
+                {% for u in active %}
+                <li>{{ u.profile.current_username }} ({{ u.username }} on Twitch)</li>
+                {% empty %}
+                <li>No one currently active on your whitelist.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% if expired %}
+        <div class="form-group">
+            <label>Expired Members</label>
+            <ul>
+                {% for u in expired %}
+                <li>{{ u.profile.current_username }} ({{ u.username }} on Twitch)</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+{% endblock %}
