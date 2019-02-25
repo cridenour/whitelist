@@ -403,6 +403,9 @@ class WhitelistTXTView(View):
         for vip in whitelist.vips.exclude(current_username='').values_list('current_username', flat=True):
             user_list.add(vip)
 
+        for ban in whitelist.bans.exclude(current_username='').values_list('current_username', flat=True):
+            user_list.remove(ban)
+
         content = '\n'.join(user_list)
 
         response = HttpResponse(content_type='text/plain; charset=utf-8', content=content, status=200)
@@ -452,6 +455,14 @@ class WhitelistJSONView(View):
             if uuid not in uuid_set:
                 uuid_set.add(uuid)
                 user_list.append({
+                    'uuid': uuid,
+                    'name': current_username
+                })
+
+        for current_username, uuid in whitelist.bans.exclude(current_username='').values_list(
+                'current_username', 'uuid'):
+            if uuid in uuid_set:
+                user_list.remove({
                     'uuid': uuid,
                     'name': current_username
                 })
