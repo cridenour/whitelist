@@ -38,7 +38,7 @@
             <label>Expired Whitelists</label>
             <ul>
                 {% for exp in expired %}
-                <li>friartruck13 <a class="btn btn-sm btn-twitch ml-1" href="https://www.twitch.tv/products/{{ exp.user.username }}/ticket/new"><i class="fa fa-redo-alt"></i> Resub</a></li>
+                <li>{{ exp.user.username }} <a class="btn btn-sm btn-twitch ml-1" href="https://www.twitch.tv/products/{{ exp.user.username }}/ticket/new"><i class="fa fa-redo-alt"></i> Resub</a></li>
                 {% endfor %}
             </ul>
         </div>

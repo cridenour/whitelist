@@ -26,8 +26,18 @@
 
     <div class="form-group">
         <label>URLs</label>
-        <input class="form-control" readonly value="{{ json_url }}" />
-        <input class="form-control" readonly value="{{ txt_url }}" />
+        <div class="row">
+            <div class="col-2">Invite URL:</div>
+            <div class="col-10"><input class="form-control" readonly value="{{ invite_url }}" /></div>
+        </div>
+        <div class="row">
+            <div class="col-2">JSON URL:</div>
+            <div class="col-10"><input class="form-control" readonly value="{{ json_url }}" /></div>
+        </div>
+        <div class="row">
+            <div class="col-2">TXT URL:</div>
+            <div class="col-10"><input class="form-control" readonly value="{{ txt_url }}" /></div>
+        </div>
     </div>
 
     <div>

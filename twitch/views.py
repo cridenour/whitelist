@@ -179,6 +179,10 @@ class WhitelistView(FormView):
         context['json_url'] = self.request.build_absolute_uri(
             reverse('whitelist-json', kwargs={'username': self.request.user.username})) + access_key
 
+        context['invite_url'] = self.request.build_absolute_uri(
+            reverse('broadcaster-connect', kwargs={'username': self.request.user.username})
+        )
+
         return context
 
 
