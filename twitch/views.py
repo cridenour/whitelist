@@ -368,7 +368,8 @@ class BrowseView(TemplateView):
 
 class WhitelistTXTView(View):
     def get(self, request, *args, **kwargs):
-        cached_response = cache.get('{}_txt_response'.format(kwargs['username']), None)
+        access_key = request.GET.get('access_key', '')
+        cached_response = cache.get('{}{}_txt_response'.format(kwargs['username'], '_{}'.format(access_key) if access_key else ''), None)
         if cached_response:
             return cached_response
 
@@ -379,9 +380,10 @@ class WhitelistTXTView(View):
             return HttpResponse(content_type='text/plain; charset=utf-8', content='', status=404)
 
         if not whitelist.public:
-            access_key = request.GET.get('access_key', '')
             if access_key != whitelist.access_key:
-                return HttpResponse(content_type='text/plain; charset=utf-8', content='', status=404)
+                response =  HttpResponse(content_type='text/plain; charset=utf-8', content='', status=404)
+                cache.set('{}_txt_response'.format(kwargs['username']), response)
+                return response
 
         # Get a set of current_username
         user_list = set()
@@ -400,14 +402,15 @@ class WhitelistTXTView(View):
         content = '\n'.join(user_list)
 
         response = HttpResponse(content_type='text/plain; charset=utf-8', content=content, status=200)
-        cache.set('{}_txt_response'.format(kwargs['username']), response)
+        cache.set('{}{}_txt_response'.format(kwargs['username'], '_{}'.format(access_key) if access_key else ''), response)
 
         return response
 
 
 class WhitelistJSONView(View):
     def get(self, request, *args, **kwargs):
-        cached_response = cache.get('{}_json_response'.format(kwargs['username']), None)
+        access_key = request.GET.get('access_key', '')
+        cached_response = cache.get('{}{}_json_response'.format(kwargs['username'], '_{}'.format(access_key) if access_key else ''), None)
         if cached_response:
             return cached_response
 
@@ -418,9 +421,10 @@ class WhitelistJSONView(View):
             return HttpResponse(content_type='application/json', content=json.dumps([]), status=404)
 
         if not whitelist.public:
-            access_key = request.GET.get('access_key', '')
             if access_key != whitelist.access_key:
-                return HttpResponse(content_type='application/json', content=json.dumps([]), status=404)
+                response = HttpResponse(content_type='application/json', content=json.dumps([]), status=404)
+                cache.set('{}_json_response'.format(kwargs['username']), response)
+                return response
 
         # Keep a set of uuids
         uuid_set = set()
@@ -449,7 +453,7 @@ class WhitelistJSONView(View):
                 })
 
         response = HttpResponse(content_type='application/json', content=json.dumps(list(user_list), indent=2), status=200)
-        cache.set('{}_json_response'.format(kwargs['username']), response)
+        cache.set('{}{}_json_response'.format(kwargs['username'], '_{}'.format(access_key) if access_key else ''), response)
 
         return response
 
