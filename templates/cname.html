@@ -1,1 +1,22 @@
 {% extends 'base.html' %}
+
+{% block title %}Using CNAMEs | Minecraft Whitelist Redux{% endblock %}
+
+{% block body_class %}bg-dark{% endblock %}
+
+{% block main %}
+<main role="main" class="container explainer mt-2">
+    <div class="row">
+        <div class="col">
+            <h3>What if you disappear too?</h3>
+            <p>The best way to avoid any future outages for packs and servers is to leverage a DNS CNAME. Combined with the pending backup solution, should this server ever disappear, you can fire up your own, import the backup and just update your DNS setting and no one will be the wiser.</p>
+            <p>To set up a CNAME to this server, in your DNS add the following:</p>
+            <p>Record Type <code>CNAME</code></p>
+            <p>Value <code>whitelist.yourdomain.com</code></p>
+            <p>TTL <code>3600</code></p>
+            <p>Target <code>minecraft-whitelist.wearelucida.com</code></p>
+            <p>With this complete, you can use <code>http://whitelist.yourdomain.com/yourtwitchid/whitelist.txt</code> (and security key if applicable) which will be future-proof&trade;.</p>
+        </div>
+    </div>
+</main>
+{% endblock %}

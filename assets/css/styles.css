@@ -29,7 +29,8 @@ body {
 /* Main styles */
 main {
     padding-top: 60px;
-    min-height: 100vh;
+    min-height: 90vh;
+    padding-bottom: 60px;
 }
 
 .card-body {

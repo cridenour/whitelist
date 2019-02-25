@@ -35,7 +35,7 @@
             <label>VIPs</label>
             <ul>
                 {% for v in vips %}
-                <li>{{ v.current_username }} <a title="Remove VIP" href="{% url 'remove-vip' v.id %}"><i class="fa fa-close"></i></a></li>
+                <li>{{ v.current_username }} <a title="Remove VIP" href="{% url 'remove-vip' v.id %}"><i class="fa fa-ban"></i></a></li>
                 {% endfor %}
             </ul>
             <a href="{% url 'add-vip' %}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add VIP</a>
@@ -46,7 +46,7 @@
             <p class="text-muted">Have a troll? Ban their minecraft account ahead of time.</p>
             <ul>
                 {% for b in bans %}
-                <li>{{ b.current_username }} <a title="Remove Ban" href="{% url 'remove-ban' b.id %}"><i class="fa fa-close"></i></a></li>
+                <li>{{ b.current_username }} <a title="Remove Ban" href="{% url 'remove-ban' b.id %}"><i class="fa fa-ban"></i></a></li>
                 {% endfor %}
             </ul>
             <a href="{% url 'add-ban' %}" class="btn btn-danger btn-sm"><i class="fa fa-plus"></i> Add Ban</a>
