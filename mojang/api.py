@@ -21,5 +21,5 @@ def name_history(uuid: str):
     :return: full list of name objects from API
     """
     resp = requests.get(f'https://api.mojang.com/user/profiles/{uuid}/names')
-    if resp.ok:
+    if resp.status_code == 200:
         return resp.json()
