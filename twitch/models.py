@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.timezone import now
+from django.core.cache import cache
 
 from .utils import generate_access_key
 
@@ -33,7 +34,12 @@ class Whitelist(models.Model):
         return self.members.all().count() + self.vips.all().count()
 
     def clear_cache(self):
-        pass
+        cache.delete_many([
+            '{}_txt_response'.format(self.user.username),
+            '{}_{}_txt_response'.format(self.user.username, self.access_key),
+            '{}_json_response'.format(self.user.username),
+            '{}_{}_json_response'.format(self.user.username, self.access_key)
+        ])
 
 
 class Subscription(models.Model):
