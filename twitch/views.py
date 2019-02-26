@@ -377,7 +377,7 @@ class WhitelistTXTView(View):
         if cached_response:
             return cached_response
 
-        broadcaster = User.objects.filter(username=kwargs['username']).first()
+        broadcaster = User.objects.filter(username=kwargs['username']).select_related('profile').first()
         whitelist = Whitelist.objects.filter(user=broadcaster).first()
 
         if not broadcaster or not whitelist:
@@ -391,6 +391,10 @@ class WhitelistTXTView(View):
 
         # Get a set of current_username
         user_list = set()
+
+        # Add broadcaster
+        if broadcaster.profile.current_username:
+            user_list.add(broadcaster.profile.current_username)
 
         three_days_ago = now() - timedelta(days=3)
 
@@ -421,7 +425,7 @@ class WhitelistJSONView(View):
         if cached_response:
             return cached_response
 
-        broadcaster = User.objects.filter(username=kwargs['username']).first()
+        broadcaster = User.objects.filter(username=kwargs['username']).select_related('profile').first()
         whitelist = Whitelist.objects.filter(user=broadcaster).first()
 
         if not broadcaster or not whitelist:
@@ -436,6 +440,14 @@ class WhitelistJSONView(View):
         # Keep a set of uuids
         uuid_set = set()
         user_list = []
+
+        # Add broadcaster
+        if broadcaster.profile.uuid:
+            uuid_set.add(broadcaster.profile.uuid)
+            user_list.append({
+                'uuid': broadcaster.profile.uuid,
+                'name': broadcaster.profile.current_username
+            })
 
         three_days_ago = now() - timedelta(days=3)
 
